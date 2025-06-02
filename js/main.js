@@ -827,4 +827,164 @@ class LoanManager {
 // Initialize loan manager when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     window.loanManager = new LoanManager();
+});
+
+// Звуковые эффекты
+const sounds = {
+    click: new Audio('sounds/click.mp3'),
+    win: new Audio('sounds/win.mp3'),
+    lose: new Audio('sounds/lose.mp3'),
+    cashout: new Audio('sounds/cashout.mp3')
+};
+
+// Функция для проверки баланса
+function checkBalance(amount) {
+    const balance = parseFloat(document.querySelector('.balance .amount').textContent);
+    return balance >= amount;
+}
+
+// Функция для обновления баланса
+function updateBalance(amount) {
+    const balanceElement = document.querySelector('.balance .amount');
+    const currentBalance = parseFloat(balanceElement.textContent);
+    const newBalance = currentBalance + amount;
+    balanceElement.textContent = newBalance.toFixed(2) + ' ₽';
+}
+
+// Функция для показа уведомления
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `notification ${type}`;
+    notification.textContent = message;
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.remove();
+    }, 3000);
+}
+
+// Игра Мины
+class MinesGame {
+    constructor() {
+        this.grid = [];
+        this.mines = [];
+        this.revealed = [];
+        this.isPlaying = false;
+        this.bet = 0;
+        this.multiplier = 1;
+        this.initializeGrid();
+    }
+
+    initializeGrid() {
+        this.grid = Array(25).fill(null);
+        this.mines = [];
+        this.revealed = [];
+        this.isPlaying = false;
+        this.multiplier = 1;
+    }
+
+    placeMines(count) {
+        while (this.mines.length < count) {
+            const position = Math.floor(Math.random() * 25);
+            if (!this.mines.includes(position)) {
+                this.mines.push(position);
+            }
+        }
+    }
+
+    revealCell(index) {
+        if (this.revealed.includes(index) || !this.isPlaying) return;
+
+        this.revealed.push(index);
+        sounds.click.play();
+
+        if (this.mines.includes(index)) {
+            this.gameOver();
+            return;
+        }
+
+        this.multiplier += 0.1;
+        this.updateMultiplier();
+    }
+
+    gameOver() {
+        this.isPlaying = false;
+        sounds.lose.play();
+        showNotification('Игра окончена!', 'error');
+        this.revealAllMines();
+    }
+
+    cashout() {
+        if (!this.isPlaying) return;
+        
+        const winAmount = this.bet * this.multiplier;
+        updateBalance(winAmount);
+        sounds.cashout.play();
+        showNotification(`Выигрыш: ${winAmount.toFixed(2)}₽`, 'success');
+        this.isPlaying = false;
+    }
+
+    startGame(bet, mineCount) {
+        if (this.isPlaying) return;
+        if (!checkBalance(bet)) {
+            showNotification('Недостаточно средств!', 'error');
+            return;
+        }
+
+        this.bet = bet;
+        updateBalance(-bet);
+        this.initializeGrid();
+        this.placeMines(mineCount);
+        this.isPlaying = true;
+        this.multiplier = 1;
+        this.updateMultiplier();
+    }
+
+    updateMultiplier() {
+        const multiplierElement = document.querySelector('.multiplier');
+        if (multiplierElement) {
+            multiplierElement.textContent = `x${this.multiplier.toFixed(1)}`;
+        }
+    }
+
+    revealAllMines() {
+        this.mines.forEach(index => {
+            const cell = document.querySelector(`.mine-cell[data-index="${index}"]`);
+            if (cell) {
+                cell.classList.add('bomb');
+            }
+        });
+    }
+}
+
+// Инициализация игры
+document.addEventListener('DOMContentLoaded', () => {
+    const game = new MinesGame();
+    
+    // Обработчики событий для ячеек
+    document.querySelectorAll('.mine-cell').forEach(cell => {
+        cell.addEventListener('click', () => {
+            const index = parseInt(cell.dataset.index);
+            game.revealCell(index);
+            cell.classList.add('revealed');
+        });
+    });
+
+    // Обработчик для кнопки Cashout
+    const cashoutBtn = document.querySelector('.cashout-btn');
+    if (cashoutBtn) {
+        cashoutBtn.addEventListener('click', () => game.cashout());
+    }
+
+    // Обработчик для начала игры
+    const startBtn = document.querySelector('.start-btn');
+    if (startBtn) {
+        startBtn.addEventListener('click', () => {
+            const bet = parseFloat(document.querySelector('.bet-input').value);
+            const mines = parseInt(document.querySelector('.mines-input').value);
+            if (bet && mines) {
+                game.startGame(bet, mines);
+            }
+        });
+    }
 }); 
