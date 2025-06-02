@@ -130,20 +130,42 @@
 }
 
 @media (max-width: 768px) {
+    .back-button {
+        top: 10px;
+        left: 10px;
+        width: 35px;
+        height: 35px;
+    }
+
+    .back-icon {
+        width: 20px;
+        height: 20px;
+    }
+
+    .balance-container {
+        padding: 6px 12px;
+        font-size: 14px;
+    }
+
+    .deposit-btn {
+        padding: 4px 8px;
+        font-size: 12px;
+    }
+
     .games-grid {
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
         gap: 15px;
     }
 
     .game-card {
-        width: 150px;
-        height: 150px;
+        width: 160px;
+        height: 160px;
         padding: 15px;
     }
 
     .game-icon {
-        width: 80px;
-        height: 80px;
+        width: 90px;
+        height: 90px;
         margin-bottom: 12px;
     }
 
@@ -153,37 +175,77 @@
 
     .categories {
         flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .category-btn {
+        padding: 8px 16px;
+        font-size: 13px;
     }
 }
 
 @media (max-width: 480px) {
+    .back-button {
+        top: 8px;
+        left: 8px;
+        width: 32px;
+        height: 32px;
+    }
+
+    .balance-container {
+        padding: 5px 10px;
+        font-size: 13px;
+    }
+
+    .deposit-btn {
+        padding: 3px 6px;
+        font-size: 11px;
+    }
+
     .games-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 10px;
+        gap: 12px;
     }
 
     .game-card {
-        width: 140px;
-        height: 140px;
+        width: 150px;
+        height: 150px;
         padding: 12px;
     }
 
     .game-icon {
-        width: 70px;
-        height: 70px;
+        width: 80px;
+        height: 80px;
         margin-bottom: 10px;
     }
 
     .game-info h3 {
-        font-size: 14px;
+        font-size: 15px;
     }
 
     .search-container {
         padding: 0 10px;
+        margin: 15px 0;
+    }
+
+    .search-input {
+        padding: 12px 15px;
+        font-size: 14px;
     }
 
     .games-container {
         margin: 0 10px;
+        padding: 15px;
+    }
+
+    .categories {
+        margin-bottom: 20px;
+        padding: 0 10px;
+    }
+
+    .category-btn {
+        padding: 6px 12px;
+        font-size: 12px;
     }
 }
 
@@ -360,5 +422,289 @@
     }
     to {
         transform: translateY(0);
+    }
+}
+
+/* Стили для игры Мины */
+.mines-game {
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.mines-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 12px;
+}
+
+.bet-control, .mines-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.bet-input, .mines-input {
+    flex: 1;
+    padding: 12px 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: #fff;
+    font-size: 16px;
+    outline: none;
+}
+
+.bet-input::placeholder, .mines-input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.currency {
+    color: #fff;
+    font-size: 16px;
+}
+
+.difficulty {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff;
+    font-size: 14px;
+}
+
+.difficulty-value {
+    color: #00ff00;
+}
+
+.multiplier-display {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #fff;
+    font-size: 16px;
+}
+
+.multiplier {
+    color: #00ff00;
+    font-weight: bold;
+}
+
+.game-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.start-btn, .cashout-btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.start-btn {
+    background: #0066ff;
+    color: #fff;
+}
+
+.start-btn:hover {
+    background: #0052cc;
+}
+
+.cashout-btn {
+    background: #00cc00;
+    color: #fff;
+}
+
+.cashout-btn:hover {
+    background: #00b300;
+}
+
+.cashout-btn:disabled {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.5);
+    cursor: not-allowed;
+}
+
+.mines-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.mine-cell {
+    aspect-ratio: 1;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+    box-shadow: 
+        5px 5px 10px rgba(0, 0, 0, 0.2),
+        -5px -5px 10px rgba(255, 255, 255, 0.05),
+        inset 2px 2px 5px rgba(255, 255, 255, 0.1);
+    transform-style: preserve-3d;
+    transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+}
+
+.mine-cell::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    border-radius: 12px;
+    z-index: 1;
+}
+
+.mine-cell:hover {
+    transform: perspective(1000px) rotateX(5deg) rotateY(5deg) scale(1.05);
+    box-shadow: 
+        8px 8px 15px rgba(0, 0, 0, 0.3),
+        -8px -8px 15px rgba(255, 255, 255, 0.08),
+        inset 2px 2px 5px rgba(255, 255, 255, 0.15);
+}
+
+.mine-cell:active {
+    transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale(0.95);
+    box-shadow: 
+        2px 2px 5px rgba(0, 0, 0, 0.2),
+        -2px -2px 5px rgba(255, 255, 255, 0.05),
+        inset 3px 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.mine-cell.revealed {
+    background: linear-gradient(145deg, rgba(0, 255, 0, 0.3), rgba(0, 200, 0, 0.2));
+    border-color: rgba(0, 255, 0, 0.3);
+    box-shadow: 
+        3px 3px 8px rgba(0, 0, 0, 0.2),
+        -3px -3px 8px rgba(255, 255, 255, 0.05),
+        inset 2px 2px 5px rgba(0, 255, 0, 0.2);
+    transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+}
+
+.mine-cell.bomb {
+    background: linear-gradient(145deg, rgba(255, 0, 0, 0.3), rgba(200, 0, 0, 0.2));
+    border-color: rgba(255, 0, 0, 0.3);
+    box-shadow: 
+        3px 3px 8px rgba(0, 0, 0, 0.2),
+        -3px -3px 8px rgba(255, 255, 255, 0.05),
+        inset 2px 2px 5px rgba(255, 0, 0, 0.2);
+    transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+}
+
+/* Добавляем SVG иконки для мин и кристаллов */
+.mine-cell svg {
+    width: 60%;
+    height: 60%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.3));
+}
+
+.mine-cell.revealed svg {
+    animation: reveal 0.3s ease-out;
+}
+
+@keyframes reveal {
+    0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.2);
+    }
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+}
+
+/* Обновляем стили для мобильных устройств */
+@media (max-width: 480px) {
+    .mines-game {
+        padding: 15px;
+    }
+
+    .mines-controls {
+        padding: 15px;
+        gap: 12px;
+    }
+
+    .bet-input, .mines-input {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .game-buttons {
+        flex-direction: column;
+    }
+
+    .start-btn, .cashout-btn {
+        width: 100%;
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .mines-grid {
+        gap: 8px;
+    }
+
+    .mine-cell {
+        border-radius: 8px;
+        box-shadow: 
+            3px 3px 6px rgba(0, 0, 0, 0.2),
+            -3px -3px 6px rgba(255, 255, 255, 0.05),
+            inset 1px 1px 3px rgba(255, 255, 255, 0.1);
+    }
+
+    .mine-cell:hover {
+        transform: perspective(1000px) rotateX(3deg) rotateY(3deg) scale(1.03);
+        box-shadow: 
+            4px 4px 8px rgba(0, 0, 0, 0.25),
+            -4px -4px 8px rgba(255, 255, 255, 0.06),
+            inset 1px 1px 3px rgba(255, 255, 255, 0.12);
+    }
+
+    .mine-cell:active {
+        transform: perspective(1000px) rotateX(0deg) rotateY(0deg) scale(0.97);
+    }
+}
+
+/* Стили для уведомлений */
+.notification {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.9);
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 8px;
+    z-index: 1000;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        transform: translate(-50%, -100%);
+        opacity: 0;
+    }
+    to {
+        transform: translate(-50%, 0);
+        opacity: 1;
     }
 } 
